@@ -1,0 +1,53 @@
+{{! Previous/next page links - only displayed on page 2+ }}
+
+{{! This is the post loop - each post will be output using this markup }}
+    <div id="posts-wrapper">
+    {{#posts}}
+        <div class='post-holder' id="{{slug}}">
+
+            {{#if @first}}
+                <article id="{{uuid}}" class="{{post_class}} first" itemscope itemtype="http://schema.org/Article">
+            {{else}}
+                {{#if @last}}
+                    <article id="{{uuid}}" class="{{post_class}} last" itemscope itemtype="http://schema.org/Article">
+                {{else}}
+                    <article id="{{uuid}}" class="{{post_class}}" itemscope itemtype="http://schema.org/Article">
+                {{/if}}
+            {{/if}}
+
+            <header class="post-header">
+                {{#if image}}<a href="{{url}}"><img class="post-thumb" src="{{image}}" alt="post image" nopin="nopin" /></a>{{/if}}
+                <h2 class="post-title" itemprop="headline"><a href="{{url}}">{{title}}</a></h2>
+          
+            </header>
+
+            <section class="post-content" itemprop="articleBody">
+                 {{#if tags}}
+                    <p class="post-description">{{content characters="750"}}  </p>
+                    <a class='btn' href="{{url}}" >read more <i class="fa fa-coffee"></i></a>
+                <a class='btn' href="https://www.facebook.com/sharer/sharer.php?u={{@blog.url}}{{url}}"
+                    onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+                    <i class="fa fa-facebook"></i><span class="hidden">Facebook</span>
+                </a>
+                <a class='btn' href="http://twitter.com/share?text={{title}}&url={{@blog.url}}{{url}}"
+                    onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+                    <i class="fa fa-twitter"></i><span class="hidden">Twitter</span>
+                </a>
+                <a class='btn' href="https://pinterest.com/pin/create/button/?{{url absolute="true"}}{{#if image}}&media={{image absolute="true"}}{{/if}}&description={{title}} - {{excerpt words="10"}}"
+                    onclick="window.open(this.href, 'pinterest-share', 'width=550,height=235');return false;">
+                    <i class="fa fa-pinterest"></i><span class="hidden">Pinterest</span>
+                </a>
+
+                {{else}}
+                    <p class="post-description">{{content}}</p>
+                {{/if}}
+            </section>
+
+        </article>
+        {{^if @last}}
+            <div class='post-after'></div>
+        {{/if}}
+        </div>
+
+     {{/posts}}
+   </div>
